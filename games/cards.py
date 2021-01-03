@@ -2,6 +2,16 @@ from random import shuffle, randint
 
 
 class Card(object):
+    """
+    A class to simulate the properties of real life playing cards
+    
+    Attributes:
+        suit: The suit of the card represented as a string e.g. 'hearts' and 'clubs'.
+        value: The numerical value of the card going from 0 (ace) to 13 (king) and 14 (joker).
+        value_verbose: A human readable version of 'value' e.g. '5' and 'king'.
+        color: The color of the suit.
+        is_joker: Checks whether card is a joker or not.
+    """
     def __init__(self, suit: str, value: int, value_verbose: str, color: str = None, is_joker: bool = False):
         self.value_verbose = value_verbose
         self.color = None
