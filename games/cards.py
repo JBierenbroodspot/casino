@@ -42,16 +42,23 @@ class Card(object):
 
 
 class DeckOfCards():
+    """A deck of cards containing multiple cards.
+    
+    Attributes:
+        cards[*Card]: A list of Card objects contained within the deck.
+        discarded_cards[*Card]: A list of Card objects no longer in the active card pool.
+        jokers: Checks whether the deck contains joker cards or not.
+    """
     def __init__(self, jokers: bool = False):
         self.cards = []
         self.discarded_cards = []
-        self.suits = {
+        self._suits = {
             'hearts': 'red',
             'diamonds': 'red',
             'clubs': 'black',
             'spades': 'black'
         }
-        self.values = {
+        self._values = {
             'ace': 1,
             '2': 2,
             '3': 3,
@@ -67,8 +74,8 @@ class DeckOfCards():
             'king': 13
         }
         #  Add normal cards to deck
-        for suit, color in self.suits.items():
-            for name, value in self.values.items():
+        for suit, color in self._suits.items():
+            for name, value in self._values.items():
                 self.cards.append(Card(suit, value, name, color))
         #  Add 2 jokers to deck
         if jokers:
