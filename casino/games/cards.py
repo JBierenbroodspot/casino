@@ -41,7 +41,7 @@ class Card(object):
         return _return
 
 
-class DeckOfCards():
+class DeckOfCards:
     """A deck of cards containing multiple cards.
     
     Attributes:
@@ -94,7 +94,7 @@ class DeckOfCards():
         Shuffle the list of cards contained in the deck, return None
         
         Optional argument include_discarded:
-        Include discarded cards into shuffle thus returning them to deck
+            Include discarded cards into shuffle thus returning them to deck
         """
         if include_discarded:
             self.cards.extend(self.discarded_cards)
@@ -107,7 +107,7 @@ class DeckOfCards():
         Pick a random card from deck, Return Card
         
         Optional argument is_remove:
-        Remove card from deck into discarded_cards if true, default False
+            Remove card from deck into discarded_cards if true, default False
         """
         _card = self.cards[randint(0, self._deck_length - 1)]
         if discard:
@@ -120,7 +120,7 @@ class DeckOfCards():
         Pick card from top of the deck (index = 0), return Card
         
         Optional argument discard: 
-        Remove card from deck into discarded_cards if true, default False
+            Remove card from deck into discarded_cards if true, default False
         """
         _card = self.cards[0]
         if discard:
