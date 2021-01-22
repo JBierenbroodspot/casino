@@ -25,20 +25,15 @@ class Card(object):
             self.suit = 'joker'
             self.value = 14
             
-    def show(self, color: bool = False) -> str:
-        """
-        Return string of the card's value and suit
-        
-        Optional argument color shows color if True
-        """
-        _return = ''
+    def __str__(self) -> str:
         if self.is_joker:
             _return = f'{self.value_verbose}'
-        elif color:
-            _return = f'{self.value_verbose} of {self.suit}, color {self.color}'
         else:
             _return = f'{self.value_verbose} of {self.suit}'
         return _return
+    
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class DeckOfCards:
@@ -85,9 +80,7 @@ class DeckOfCards:
                 
     def show_cards(self) -> str:
         """Return a string with the cards in current order"""
-        #  Turn Card object into their human readable selves
-        _human_readable = [card.show() for card in self.cards]
-        return f'This deck contains {_human_readable}'
+        return f'This deck contains {self.cards}'
     
     def shuffle_cards(self, include_discarded: bool = True) -> None:
         """
