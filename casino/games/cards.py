@@ -1,4 +1,42 @@
 from random import shuffle, randint
+from enum import Enum
+
+
+class Suit(Enum):
+    def __str__(self) -> str:
+        return self.name.lower()
+    
+    def __repr__(self) -> str:
+        return self.__str__()
+    
+    HEARTS = 1
+    DIAMONDS = 2
+    CLUBS = 3
+    SPADES = 4
+    JOKER = 5
+    
+
+class CardValue(Enum):
+    def __str__(self) -> str:
+        return self.name.lower()
+    
+    def __repr__(self) -> str:
+        return self.__str__()
+    
+    ACE = 1
+    TWO = 2
+    THREE = 3
+    FOUR = 4
+    FIVE = 5
+    SIX = 6
+    SEVEN = 7 
+    EIGHT = 8
+    NINE = 9
+    TEN = 10
+    JACK = 11
+    QUEEN = 12
+    KING = 13
+    JOKER = 14
 
 
 class Card(object):
@@ -12,25 +50,17 @@ class Card(object):
         color: The color of the suit.
         is_joker: Checks whether card is a joker or not.
     """
-    def __init__(self, suit: str, value: int, value_verbose: str, color: str = None, is_joker: bool = False):
-        self.value_verbose = value_verbose
-        self.color = None
-        self.is_joker = is_joker
-        if color:
-            self.color = color
-        if not is_joker:
-            self.suit = suit
-            self.value = value
-        else:
-            self.suit = 'joker'
-            self.value = 14
+    def __init__(self, suit: Suit, value: CardValue, color: str = None):
+        self.color = color
+        self.suit = suit
+        self.value = value
             
     def __str__(self) -> str:
-        if self.is_joker:
-            _return = f'{self.value_verbose}'
+        if self.suit == Suit.JOKER:
+            _str = f"{self.value}"
         else:
-            _return = f'{self.value_verbose} of {self.suit}'
-        return _return
+            _str = f"{self.value} of {self.suit}"
+        return _str
     
     def __repr__(self) -> str:
         return self.__str__()
@@ -47,35 +77,16 @@ class DeckOfCards:
     def __init__(self, jokers: bool = False):
         self.cards = []
         self.discarded_cards = []
-        self._suits = {
-            'hearts': 'red',
-            'diamonds': 'red',
-            'clubs': 'black',
-            'spades': 'black'
-        }
-        self._values = {
-            'ace': 1,
-            '2': 2,
-            '3': 3,
-            '4': 4,
-            '5': 5,
-            '6': 6,
-            '7': 7,
-            '8': 8,
-            '9': 9,
-            '10': 10,
-            'jack': 11,
-            'queen': 12,
-            'king': 13
-        }
-        #  Add normal cards to deck
-        for suit, color in self._suits.items():
-            for name, value in self._values.items():
-                self.cards.append(Card(suit, value, name, color))
+        #  Add normal cards to deck, skip all jokers
+        for suit in Suit:
+            if suit != Suit.JOKER:
+                for value in CardValue:
+                    if value != CardValue.JOKER:
+                        self.cards.append(Card(suit, value))
         #  Add 2 jokers to deck
         if jokers:
-            self.cards.append(Card('joker', 14, 'joker', is_joker=True))
-            self.cards.append(Card('joker', 14, 'joker', is_joker=True))
+            self.cards.append(Card(Suit.JOKER, CardValue.JOKER))
+            self.cards.append(Card(Suit.JOKER, CardValue.JOKER))
         self._deck_length = len(self.cards)
                 
     def show_cards(self) -> str:
