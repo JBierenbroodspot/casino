@@ -1,10 +1,19 @@
 
 
 class Game:
+    """A skeleton for a game
+
+    This class should inherited by another class which should extend the content method. You use this class by invoking
+    the play method which repeats the content method in a loop.
+
+    Attributes:
+        has_ended: Checks if the game has ended.
+    """
     def __init__(self):
         self.has_ended = False
 
     def play(self) -> None:
+        """Event loop of the game, returns None"""
         while self.has_ended is False:
             try:
                 while True:
@@ -22,6 +31,7 @@ class Game:
         The code for the game should be added to this method. Do not edit the play() method as it is only a wrapper
         for this method.
         """
+        return None
 
     @staticmethod
     def end_game(force: bool = False) -> bool:
