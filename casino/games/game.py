@@ -1,3 +1,4 @@
+from casino.users.users import User
 
 
 class Game:
@@ -8,9 +9,11 @@ class Game:
 
     Attributes:
         has_ended: Checks if the game has ended.
+        user: The player that plays the game.
     """
-    def __init__(self):
+    def __init__(self, user: User):
         self.has_ended = False
+        self.user = user
 
     def play(self) -> None:
         """Event loop of the game, returns None"""
