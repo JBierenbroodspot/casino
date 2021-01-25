@@ -40,7 +40,7 @@ class CardValue(Enum):
 
 
 class Card:
-    """A class to simulate the properties of real life playing cards
+    """A class to simulate the properties of real life playing deck
     
     Attributes:
         suit: A Suit instance representing the suit of the card.
@@ -62,17 +62,17 @@ class Card:
 
 
 class DeckOfCards:
-    """A deck of cards containing multiple cards.
+    """A deck of deck containing multiple deck.
     
     Attributes:
-        cards[Card]: A list of Card objects contained within the deck.
+        deck[Card]: A list of Card objects contained within the deck.
         discarded_cards[*Card]: A list of Card objects no longer in the active card pool.
-        jokers: Checks whether the deck contains joker cards or not.
+        jokers: Checks whether the deck contains joker deck or not.
     """
-    def __init__(self, jokers: bool = False):
+    def __init__(self, jokers: bool=False):
         self.cards = []
         self.discarded_cards = []
-        #  Add normal cards to deck, skip all jokers
+        #  Add normal deck to deck, skip all jokers
         for suit in Suit:
             if suit != Suit.JOKER:
                 for value in CardValue:
@@ -85,14 +85,14 @@ class DeckOfCards:
         self._deck_length = len(self.cards)
                 
     def show_cards(self) -> str:
-        """Return a string with the cards in current order"""
+        """Return a string with the deck in current order"""
         return f'This deck contains {self.cards}'
     
     def shuffle_cards(self, include_discarded: bool = True) -> None:
-        """Shuffle the list of cards contained in the deck, return None
+        """Shuffle the list of deck contained in the deck, return None
         
         Args:
-            include_discarded: Include discarded cards into shuffle thus returning them to deck
+            include_discarded: Include discarded deck into shuffle thus returning them to deck
         """
         if include_discarded:
             self.cards.extend(self.discarded_cards)
@@ -104,7 +104,7 @@ class DeckOfCards:
         """ Pick a random card from deck, Return Card
         
         Args:
-            is_remove: Remove card from deck into discarded_cards if true, default False
+            discard: Remove card from deck into discarded_cards if true, default False
         """
         _card = self.cards[randint(0, self._deck_length - 1)]
         if discard:
@@ -123,4 +123,3 @@ class DeckOfCards:
             self.discarded_cards.append(_card)
             self.cards.remove(_card)
         return _card
-        
