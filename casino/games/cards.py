@@ -69,7 +69,7 @@ class DeckOfCards:
         discarded_cards[*Card]: A list of Card objects no longer in the active card pool.
         jokers: Checks whether the deck contains joker deck or not.
     """
-    def __init__(self, jokers: bool=False):
+    def __init__(self, jokers: bool = False):
         self.cards = []
         self.discarded_cards = []
         #  Add normal deck to deck, skip all jokers
@@ -98,7 +98,6 @@ class DeckOfCards:
             self.cards.extend(self.discarded_cards)
             self.discarded_cards.clear()
         shuffle(self.cards)
-        return None
     
     def pick_random_card(self, discard: bool = False) -> Card:
         """ Pick a random card from deck, Return Card

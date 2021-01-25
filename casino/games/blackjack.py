@@ -25,3 +25,6 @@ class Blackjack(Game):
 
     def content(self) -> None:
         super().content()
+
+    def place_bet(self):
+        pass

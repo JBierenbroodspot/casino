@@ -6,12 +6,10 @@ class User:
     def win_balance(self, amount: float) -> None:
         """Add won amount to balance, return None"""
         self.balance += amount
-        return None
     
     def lose_balance(self, amount: float) -> None:
         """Deduct lost balance, return None"""
-        if self.balance < amount: #  Check if the deducted amount exceeds balance
+        if self.balance < amount:  # Check if the deducted amount exceeds balance
             # TODO add low balance consequences 
             pass
         self.balance -= amount
-        return None
