@@ -40,15 +40,17 @@ class CardValue(Enum):
 
 
 class Card:
-    """A class to simulate the properties of real life playing deck
+    """A class to simulate the properties of real life playing deck.
     
     Attributes:
         suit: A Suit instance representing the suit of the card.
-        value: A CardValue instace representing the value of the card.
+        value: A CardValue instance representing the value of the card.
+        is_open: Checks whether the card is faced up (open) or faced down (closed/hidden).
     """
-    def __init__(self, suit: Suit, value: CardValue):
+    def __init__(self, suit: Suit, value: CardValue, is_open: bool = True):
         self.suit = suit
         self.value = value
+        self.is_open = is_open
             
     def __str__(self) -> str:
         if self.suit == Suit.JOKER:
@@ -85,39 +87,49 @@ class DeckOfCards:
         self._deck_length = len(self.cards)
                 
     def show_cards(self) -> str:
-        """Return a string with the deck in current order"""
+        """Return a string with the deck in current order."""
         return f'This deck contains {self.cards}'
     
     def shuffle_cards(self, include_discarded: bool = True) -> None:
-        """Shuffle the list of deck contained in the deck, return None
+        """Shuffle the list of deck contained in the deck, return None.
         
         Args:
-            include_discarded: Include discarded deck into shuffle thus returning them to deck
+            include_discarded: Include discarded deck into shuffle thus returning them to deck.
         """
         if include_discarded:
             self.cards.extend(self.discarded_cards)
             self.discarded_cards.clear()
         shuffle(self.cards)
     
-    def pick_random_card(self, discard: bool = False) -> Card:
-        """ Pick a random card from deck, Return Card
+    def pick_random_card(self, discard: bool = False, is_open: bool = True) -> Card:
+        """ Pick a random card from deck, Return Card.
         
         Args:
-            discard: Remove card from deck into discarded_cards if true, default False
+            is_open: Checks whether the card should be dealt face up (open).
+            discard: Remove card from deck into discarded_cards if true, default False.
         """
         _card = self.cards[randint(0, self._deck_length - 1)]
+        if is_open:
+            _card.is_open = True
+        else:
+            _card.is_open = False
         if discard:
             self.discarded_cards.append(_card)
             self.cards.remove(_card)
         return _card
     
-    def pick_top_card(self, discard: bool = False) -> Card:
-        """Pick card from top of the deck (index = 0), return Card
+    def pick_top_card(self, discard: bool = False, is_open: bool = True) -> Card:
+        """Pick card from top of the deck (index = 0), return Card.
         
         Args: 
-            Remove card from deck into discarded_cards if true, default False
+            discard: Remove card from deck into discarded_cards if true, default False.
+            is_open: Checks whether the card should be dealt face up (open).
         """
         _card = self.cards[0]
+        if is_open:
+            _card.is_open = True
+        else:
+            _card.is_open = False
         if discard:
             self.discarded_cards.append(_card)
             self.cards.remove(_card)
