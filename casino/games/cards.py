@@ -66,6 +66,11 @@ class Card:
 
 
 class Hand:
+    """A class to represent an actual hand of cards.
+
+    Attributes:
+        cards[Card]: The cards in hand.
+    """
     def __init__(self):
         self.cards = []
 
@@ -86,6 +91,10 @@ class Hand:
 
     @property
     def value(self) -> int:
+        """The numerical value of the cards in hand. returns int.
+
+        The numerical value is retrieved from CardEnum.__int__.
+        """
         return sum(map(CardEnum.__int__, self.cards))
 
 
