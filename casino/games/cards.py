@@ -64,6 +64,9 @@ class Card:
     def __repr__(self) -> str:
         return self.__str__()
 
+    def __int__(self) -> int:
+        return int(self.value) if self.is_open else 0
+
 
 class Hand:
     """A class to represent an actual hand of cards.
@@ -78,12 +81,12 @@ class Hand:
         len_cards = len(self.cards)
         if len_cards == 0:
             str_ = "nothing"
-        if len_cards == 1:
-            str_ = str(self.cards)
-        if len_cards == 2:
-            str_ = " and ".join(self.cards)
+        elif len_cards == 1:
+            str_ = str(self.cards[0])
+        elif len_cards == 2:
+            str_ = " and ".join([str(card) for card in self.cards])
         else:
-            str_ = ", ".join(self.cards[:-1]), "and", self.cards[-1]
+            str_ = ", ".join([str(card) for card in self.cards[:-1]]) + " and " + str(self.cards[-1])
         return str_
 
     def __repr__(self) -> str:
@@ -95,7 +98,7 @@ class Hand:
 
         The numerical value is retrieved from CardEnum.__int__.
         """
-        return sum(map(CardEnum.__int__, self.cards))
+        return sum(map(int, self.cards))
 
 
 class DeckOfCards:
@@ -136,31 +139,15 @@ class DeckOfCards:
             self.discarded_cards.clear()
         shuffle(self.cards)
     
-    def pick_random_card(self, discard: bool = False, is_open: bool = True) -> Card:
-        """ Pick a random card from deck, Return Card.
-        
-        Args:
-            is_open: Checks whether the card should be dealt face up (open).
-            discard: Remove card from deck into discarded_cards if true, default False.
-        """
-        _card = self.cards[randint(0, self._deck_length - 1)]
-        if is_open:
-            _card.is_open = True
-        else:
-            _card.is_open = False
-        if discard:
-            self.discarded_cards.append(_card)
-            self.cards.remove(_card)
-        return _card
-    
-    def pick_top_card(self, discard: bool = False, is_open: bool = True) -> Card:
+    def pick_card(self, discard: bool = False, is_open: bool = True, random: bool = False) -> Card:
         """Pick card from top of the deck (index = 0), return Card.
         
         Args: 
             discard: Remove card from deck into discarded_cards if true, default False.
             is_open: Checks whether the card should be dealt face up (open).
+            random: Checks whether a random card should be selected rather than the top one.
         """
-        _card = self.cards[0]
+        _card = self.cards[randint(0, self._deck_length - 1)] if random is True else self.cards[0]
         if is_open:
             _card.is_open = True
         else:
