@@ -2,13 +2,18 @@ from random import shuffle, randint
 from enum import Enum
 
 
-class Suit(Enum):
+class CardEnum(Enum):
     def __str__(self) -> str:
         return self.name.lower()
-    
+
     def __repr__(self) -> str:
         return self.__str__()
-    
+
+    def __int__(self) -> int:
+        return self.value
+
+
+class Suit(CardEnum):
     HEARTS = 1
     DIAMONDS = 2
     CLUBS = 3
@@ -16,13 +21,7 @@ class Suit(Enum):
     JOKER = 5
     
 
-class CardValue(Enum):
-    def __str__(self) -> str:
-        return self.name.lower()
-    
-    def __repr__(self) -> str:
-        return self.__str__()
-    
+class CardValue(CardEnum):
     ACE = 1
     TWO = 2
     THREE = 3
@@ -53,14 +52,41 @@ class Card:
         self.is_open = is_open
             
     def __str__(self) -> str:
-        if self.suit == Suit.JOKER:
-            _str = f"{self.value}"
+        if self.is_open:
+            if self.suit == Suit.JOKER:
+                _str = f"{self.value}"
+            else:
+                _str = f"{self.value} of {self.suit}"
         else:
-            _str = f"{self.value} of {self.suit}"
+            _str = "hidden"
         return _str
     
     def __repr__(self) -> str:
         return self.__str__()
+
+
+class Hand:
+    def __init__(self):
+        self.cards = []
+
+    def __str__(self) -> str:
+        len_cards = len(self.cards)
+        if len_cards == 0:
+            str_ = "nothing"
+        if len_cards == 1:
+            str_ = str(self.cards)
+        if len_cards == 2:
+            str_ = " and ".join(self.cards)
+        else:
+            str_ = ", ".join(self.cards[:-1]), "and", self.cards[-1]
+        return str_
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    @property
+    def value(self) -> int:
+        return sum(map(CardEnum.__int__, self.cards))
 
 
 class DeckOfCards:
