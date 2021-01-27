@@ -36,9 +36,8 @@ class Game:
         """
         return None
 
-    @staticmethod
-    def end_game(force: bool = False) -> bool:
-        """A static method that checks whether the game should be ended, returns boolean.
+    def end_game(self, force: bool = False) -> bool:
+        """Checks whether the game should be ended, returns boolean.
 
         Args:
             force: Checks if game should be ended without prompting the user.
@@ -46,22 +45,26 @@ class Game:
         Returns:
             True if the game should be ended, false if not.
         """
-        _return = False
-
+        return_ = False
         if force is True:
-            _return = True
-            return _return
+            return_ = True
+        else:
+            user_input = self.validate_input("Do you really want to quit?[y/n]", ('y', 'n'))
+            if user_input == 'y':
+                return_ = True
+            elif user_input == 'n':
+                return_ = False
+        return return_
 
-        print("Do you really want to quit?[y/n]")
+    @staticmethod
+    def validate_input(prompt: str, options: tuple) -> str:
+        """A staticmethod which will wait until user has entered a correct input, returns string."""
+        print(prompt)
         while True:
-            _user_input = input(">>> ")
-            if _user_input.lower().strip(' ') == 'y':
-                _return = True
-                break
-            elif _user_input.lower() == 'n':
-                _return = False
+            user_input = input(">>> ")
+            if user_input.lower().strip(' ') in [option.lower() for option in options]:
+                return_ = user_input.lower()
                 break
             else:
-                print("Please enter a valid response.")
-                continue
-        return _return
+                print(f"Please enter {options}")
+        return return_
