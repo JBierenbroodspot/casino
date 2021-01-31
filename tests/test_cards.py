@@ -42,6 +42,8 @@ hand.cards = [cards.Card(cards.Suit.SPADES, cards.CardValue.ACE),
               cards.Card(cards.Suit.DIAMONDS, cards.CardValue.KING)]
 print(f"__str__ of Hand with 4 cards, 1 closed: {hand}")
 print(f"value of Hand with 4 cards, 1 closed: {hand.value}")
+hand.reveal_hand()
+print(f"Hand after Hand.reveal_hand: {hand}\nand value: {hand.value}")
 print("\n# ---------------------------------------- Test DeckOfCards ---------------------------------------- #\n")
 deck_without_jokers = cards.DeckOfCards()
 print(f"All cards in deck w/o jokers: {deck_without_jokers.show_cards()}")

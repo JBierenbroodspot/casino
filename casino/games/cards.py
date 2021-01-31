@@ -100,6 +100,11 @@ class Hand:
         """
         return sum(map(int, self.cards))
 
+    def reveal_hand(self) -> None:
+        """Sets is_open of all cards in hand to True, returns None."""
+        for card in self.cards:
+            card.is_open = True
+
 
 class DeckOfCards:
     """A deck of deck containing multiple deck.
