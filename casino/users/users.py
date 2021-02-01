@@ -1,14 +1,24 @@
-class User:
-    """A class representing a user.
+class BaseUser:
+    """A base for users.
 
     Attributes:
         username: The name of the user.
-        balance: The amount of currency the user has.
+    """
+    def __init__(self, username: str):
+        self.username = username
+
+
+class PlayableUser(BaseUser):
+    """A user class representing a player.
+
+    Attributes:
+        username: The name of the user.
+        balance: The amount of money the user possesses.
     """
     def __init__(self, username: str, balance: float = 100):
-        self.username = username
+        super(PlayableUser, self).__init__(username=username)
         self.balance = balance
-        
+
     def win_balance(self, amount: float) -> None:
         """Add won amount to balance, return None.
 
@@ -16,7 +26,7 @@ class User:
             amount: The amount added to the user balance.
         """
         self.balance += amount
-    
+
     def lose_balance(self, amount: float) -> None:
         """Deduct lost balance, return None.
 
